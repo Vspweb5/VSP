@@ -1,0 +1,38 @@
+.box {
+    /* text-align: center; */
+    width: 100%;
+}
+
+.my-box {
+    display: inline-block;
+    border-radius: 5px;
+    height: max-content;
+    width: fit-content;
+    margin: 10px;
+    max-width: 300px;
+    box-shadow: 2px 15px 10px 3px grey;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.my-box img {
+    height: 20vh;
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.content {
+    width: 100%;
+    padding: 5px;
+}
+
+.desc {
+    font-size: smaller;
+    font-weight: lighter;
+    /* max-width: 100px; */
+    width: 100%;
+    /* text-align: end; */
+    position: relative;
+}

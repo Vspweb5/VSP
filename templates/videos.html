@@ -3,8 +3,33 @@
 VSP | Videos
 {% endblock title %}
 
+{% block link %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/videos.css') }}" />
+{% endblock link %}
+
 {% block body %}
+
 <h1>This is the Index page</h1>
 <h2>Videos</h2>
 <a href="/">Home</a>
+
+<div class="box">
+    {% for i in range(1, 5) %}
+    <form>
+        <div class="my-box">
+            <img src="https://www.morebusiness.com/wp-content/uploads/2016/02/free-stock-photos.jpg" alt="Image" />
+            <span class="content">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis architecto saepe, dolorem atque dolor
+                placeat quam fugiat, odit voluptatibus optio, consequatur omnis harum repellendus!
+            </span><br />
+            <span class="desc">
+                This is description.
+            </span>
+        </div>
+        <input type="text" id="title" value="Title 1">
+    </form>
+    {% endfor %}
+</div>
+
 {% endblock body %}
