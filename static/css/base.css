@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+    color: #C8C8C8;
+    /* background-color: #3F3F3F; */
+    background-color: rgba(33, 37, 41, 1) !important;
+}
+
+nav {
+    box-shadow: 0 2px 4px 0 rgba(255, 255, 255, .2);
+    margin-bottom: 20px;
+}
+
+.logged {
+    display: none !important;
+}
+
+/* #in1 {
+    cursor: default;
+} */
