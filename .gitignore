@@ -1,3 +1,5 @@
 env
 bin
 flask_session
+__pycache__
+.gitignore

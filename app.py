@@ -39,7 +39,10 @@ storage = firebase.storage()
 
 @app.route('/')
 def index():
-    if session["username"] == None:
+    try:
+        if session["username"] == None:
+            session["username"] = "null"
+    except KeyError:
         session["username"] = "null"
     return render_template('index.html', username=session["username"])
 
