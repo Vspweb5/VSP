@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
-from flask_socketio import SocketIO
 from datetime import timedelta
 from config import Config
 from pyrebase import pyrebase
@@ -14,9 +13,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # If TRUE
 # The maximum number of items the session stores
 # before it starts deleting some, default 500
-app.config['SESSION_FILE_THRESHOLD'] = 500
+app.config['SESSION_FILE_THRESHOLD'] = 100
 Session(app)
-socketio = SocketIO(app)
 #######################################
 
 ######################## Firebase ####################################
@@ -49,11 +47,6 @@ def check():
 
 @app.route('/')
 def index():
-    # try:
-    #     if session["username"] == None:
-    #         session["username"] = "null"
-    # except KeyError:
-    #     session["username"] = "null"
     check()
     return render_template('index.html', username=session["username"])
 
@@ -81,19 +74,9 @@ def upload():
 def vid():
     check()
     if request.method == "GET":
-        # print(request.args.get('v'))
-        # url = request.args.get('v')
-        # if '-' in url:
-        #     url = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + \
-        #         url + ".mp4?alt=media"
-        #     return render_template('watch.html', username=session["username"], url=url, dis='none', vid='block')
-        # else:
-        #     url = url
-        #     return render_template('watch.html', username=session["username"], url=url, dis='block', vid='none')
         key = request.args.get('v')
         return render_template('watch.html', username=session["username"], key=key)
     redirect('/videos')
-    # return render_template('watch.html', username=session["username"])
 
 
 @app.route('/videos')
@@ -102,12 +85,9 @@ def videos():
     return render_template('videos.html', username=session["username"])
 
 
-@socketio.on('disconnect')
 @app.route('/logout')
 def logout():
     session.pop("username", None)
-    # session["username"] = "null"
-    # session["email"] = "null"
     return redirect('/')
 
 
@@ -115,7 +95,6 @@ def logout():
 def login():
     if request.method == "POST":
         email = request.form.get("email")
-        # session["email"] = email
         key = email.split('@')[0]
         password = request.form.get("password")
         try:
@@ -167,9 +146,3 @@ def signup():
                     Kindly email above error to vsp.web5@gmail.com
             """
     return render_template('signup.html')
-
-
-# main driver function
-if __name__ == '__main__':
-    # app.run(port=5000, debug=True)
-    app.run(debug=False)
