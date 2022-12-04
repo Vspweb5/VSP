@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-from flask_session import Session
+import flask_session
 from datetime import timedelta
 from config import Config
 from pyrebase import pyrebase
@@ -14,7 +14,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # If TRUE
 # The maximum number of items the session stores
 # before it starts deleting some, default 500
 app.config['SESSION_FILE_THRESHOLD'] = 100
-Session(app)
+flask_session.Session(app)
 #######################################
 
 ######################## Firebase ####################################
@@ -148,5 +148,5 @@ def signup():
     return render_template('signup.html')
 
 
-if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+# if __name__ == "__main__":
+#     app.run(debug=False, host='0.0.0.0')

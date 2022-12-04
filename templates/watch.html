@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-VSP | Video Title
+VSP
 {% endblock title %}
 
 {% block link %}
@@ -50,6 +50,7 @@ VSP | Video Title
                             video.forEach(content => {
                                 if (content.key == "title") {
                                     utitle.innerText = content.val();
+                                    document.title = "VSP | " + content.val();
                                 }
                                 if (content.key == "desc") {
                                     udesc.innerText = content.val();
