@@ -1,12 +1,57 @@
 {% extends 'base.html' %}
+
 {% block title %}
 VSP | Upload
 {% endblock title %}
 
 {% block link %}
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vid.css') }}" /> -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/upload.css') }}" />
 {% endblock link %}
+
+{% block script %}
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+<script src="{{url_for('static', filename='js/upload.js')}}"></script>
+{% endblock script %}
 
 {% block body %}
 <h1>Upload your videos here.</h1>
+<div class="upVid">
+    <div class="videoUploaded">
+        <iframe width="560" height="315" src="" id="ytplayer" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        <video width="560" height="315" class="vid" id="vid" controls></video>
+    </div>
+    <div id="myform">
+        <!-- <label for="fileInp" id="addVideo">+<br>Upload Video from device</label> -->
+        <label for="fileInp" id="addVideo">Upload Video from device</label>
+        <input type="file" class="inputFile" id="fileInp" onchange="getFile(event), previewFile()" accept="video/mp4" />
+        <div class="yturl">
+            <label for="yturl" class="form-label">Paste the Youtube link here:</label>
+            <input type="text" class="form-control" id="yturl" required>
+            <button class="btn btn-outline-success mt-2" onclick="checkLink()" style="width: 100px">Check</button>
+            <br />
+            <!-- <embed width="auto" height="auto" id="ytplayer" src="" controls /> -->
+            <!-- <iframe width="auto" height="auto" src="" id="ytplayer" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe> -->
+        </div>
+    </div>
+    <span id="editContent">
+        <!-- <b>Title of your video:</b> -->
+        <label for="fortitle" class="form-label">Title of your video:</label>
+        <input type="text" class="fileText form-control" id="fortitle">
+    </span>
+    <span id="editDesc">
+        <label for="fordesc" class="form-label">Description for your video:</label>
+        <textarea class="form-control" id="fordesc" rows="3"></textarea>
+    </span>
+    <button onclick="uploadVideo()" id="upbtn">UPLOAD VIDEO</button>
+    <div class="upVid" id="pgbar">
+        <div class="bar">
+            <div class="progress"></div>
+        </div>
+        <div class="uploadPercentage">0%</div>
+    </div>
+</div>
 {% endblock body %}

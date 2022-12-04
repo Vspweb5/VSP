@@ -1,0 +1,136 @@
+/* * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    letter-spacing: 2px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+} */
+
+.upVid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 60px; */
+    /* height: 100vh; */
+    flex-direction: column;
+    margin-bottom: 200px;
+}
+
+#myform {
+    width: 100%;
+}
+
+#pgbar {
+    display: none;
+    width: 100%;
+    justify-content: center;
+}
+
+#editContent {
+    display: none;
+    margin-bottom: 30px;
+    width: 100%;
+    /* font-size: large; */
+}
+
+#editDesc {
+    display: none;
+    margin-bottom: 30px;
+    width: 100%;
+    /* font-size: large; */
+}
+
+.inputFile {
+    display: none;
+}
+
+.fileText {
+    font-size: medium;
+    border-radius: 5px;
+    border: 3px solid wheat;
+    padding: 5px;
+}
+
+#addVideo {
+    height: 100px;
+    /* width: 200px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 10px;
+    font-size: 100px;
+    background: linear-gradient(45deg, blue, red);
+    cursor: pointer;
+    font-size: large;
+    text-align: center;
+}
+
+button {
+    padding: 20px 25px;
+    background: cornflowerblue;
+    color: white;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 90;
+    transition: 1s;
+}
+
+#upbtn {
+    cursor: not-allowed;
+    display: none;
+}
+
+.activ {
+    background-color: blue;
+}
+
+.bar {
+    height: 50px;
+    width: 500px;
+    background: #80808073;
+    margin-bottom: 10px;
+}
+
+.progress {
+    background: linear-gradient(12deg, red, blue);
+    height: 100%;
+    width: 0%;
+}
+
+.uploadPercentage {
+    font-size: 25px;
+}
+
+.vid {
+    height: 315px;
+    /* width: auto; */
+    object-fit: contain;
+    display: none;
+    /* border: 5px solid cornflowerblue; */
+}
+
+video {
+    border-radius: 10px;
+    border: solid;
+}
+
+#ytplayer {
+    border-radius: 10px;
+    border: solid;
+    display: none;
+}
+
+.videoUploaded {
+    margin-top: 10px;
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+}

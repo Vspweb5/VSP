@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
+from flask_socketio import SocketIO
 from datetime import timedelta
 from config import Config
 from pyrebase import pyrebase
@@ -10,22 +11,23 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=5) # If TRUE
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # If TRUE
 # The maximum number of items the session stores
 # before it starts deleting some, default 500
 app.config['SESSION_FILE_THRESHOLD'] = 500
 Session(app)
+socketio = SocketIO(app)
 #######################################
 
 ######################## Firebase ####################################
 firebaseConfig = {
     'apiKey': "AIzaSyCV5Ve41CZI5b2j9dexFqQjwH9pdvur5KY",
     'authDomain': "vsp-web.firebaseapp.com",
-    'databaseURL': "https://vsp-web-default-rtdb.firebaseio.com/",
     'projectId': "vsp-web",
     'storageBucket': "vsp-web.appspot.com",
     'messagingSenderId': "76950228191",
     'appId': "1:76950228191:web:c83ad1d27d8c333961ed6a",
+    'databaseURL': "https://vsp-web-default-rtdb.firebaseio.com/",
     'measurementId': "G-FH6MYLQEC4"
 }
 
@@ -37,44 +39,74 @@ storage = firebase.storage()
 #######################################################################
 
 
-@app.route('/')
-def index():
+def check():
     try:
         if session["username"] == None:
             session["username"] = "null"
     except KeyError:
         session["username"] = "null"
+
+
+@app.route('/')
+def index():
+    # try:
+    #     if session["username"] == None:
+    #         session["username"] = "null"
+    # except KeyError:
+    #     session["username"] = "null"
+    check()
     return render_template('index.html', username=session["username"])
 
 
 @app.route('/about')
 def about():
+    check()
     return render_template('about.html', username=session["username"])
 
 
 @app.route('/contact')
 def contact():
+    check()
     return render_template('contact.html', username=session["username"])
 
 
-@app.route('/upload')
+@app.route('/upload', methods=["GET", "POST"])
 def upload():
+    if session["username"] == "null" or session["username"] == None:
+        return redirect('/login')
     return render_template('upload.html', username=session["username"])
 
 
-@app.route('/vid', methods=["GET", "POST"])
+@app.route('/watch', methods=["GET", "POST"])
 def vid():
-    return render_template('vid.html', username=session["username"])
+    check()
+    if request.method == "GET":
+        # print(request.args.get('v'))
+        # url = request.args.get('v')
+        # if '-' in url:
+        #     url = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + \
+        #         url + ".mp4?alt=media"
+        #     return render_template('watch.html', username=session["username"], url=url, dis='none', vid='block')
+        # else:
+        #     url = url
+        #     return render_template('watch.html', username=session["username"], url=url, dis='block', vid='none')
+        key = request.args.get('v')
+        return render_template('watch.html', username=session["username"], key=key)
+    redirect('/videos')
+    # return render_template('watch.html', username=session["username"])
 
 
 @app.route('/videos')
 def videos():
+    check()
     return render_template('videos.html', username=session["username"])
 
 
+@socketio.on('disconnect')
 @app.route('/logout')
 def logout():
-    session["username"] = "null"
+    session.pop("username", None)
+    # session["username"] = "null"
     # session["email"] = "null"
     return redirect('/')
 

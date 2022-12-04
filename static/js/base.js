@@ -5,7 +5,7 @@ var login1 = document.getElementById("in1");
 var login2 = document.getElementById("in2");
 var login3 = document.getElementById("in3");
 
-console.log(username.innerText)
+// console.log(username.innerText)
 
 if (username.innerText == "null" || username.innerText == null || username.innerText == "") {
     logout1.classList.remove("logged");

@@ -1,0 +1,85 @@
+.title {
+    font-style: normal;
+    font-family: inherit;
+    font-weight: bold;
+
+}
+
+.play-container {
+    padding-left: 2%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.play-video {
+    flex-basis: 69%;
+    /* height: 300px; */
+}
+
+.right-sidebar {
+    flex-basis: 30%;
+}
+
+.play-video video {
+    width: 100%;
+}
+
+.play-video iframe {
+    width: 100%;
+    height: 484px;
+}
+
+.play-video h3 {
+    font-weight: 600;
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.Overview {
+    width: 10em;
+    height: 5ex;
+    background-color: grey;
+    border: 2px solid groove;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.Overview:hover {
+    background-color: white;
+}
+
+.Share {
+    width: 10em;
+    height: 5ex;
+    background-color: grey;
+    border: 2px solid;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.Share:hover {
+    background-color: white;
+}
+
+.s2 {
+    width: 10em;
+    height: 5ex;
+    background-color: grey;
+    border: 2px solid groove;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.s2:hover {
+    background-color: white;
+}
