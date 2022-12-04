@@ -146,3 +146,7 @@ def signup():
                     Kindly email above error to vsp.web5@gmail.com
             """
     return render_template('signup.html')
+
+
+if __name__ == "__main__":
+    app.run()
