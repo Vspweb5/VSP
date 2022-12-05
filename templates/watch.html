@@ -8,8 +8,6 @@ VSP
 {% endblock link %}
 
 {% block script %}
-<!-- <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-<script src="{{url_for('static', filename='js/videos.js')}}"></script> -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
@@ -32,7 +30,6 @@ VSP
     const uKey = '-' + document.getElementById("key").innerText;
     const vid = document.getElementById("uVideo");
     const tube = document.getElementById("uTube");
-    let flag = 1;
     var utitle = document.getElementById("utitle");
     var udesc = document.getElementById("udesc");
     var url = null;
@@ -45,8 +42,6 @@ VSP
                 if (snap.key == "videos") {
                     snap.forEach(video => {
                         if (video.key == uKey) {
-                            // console.log("Match Found");
-                            flag = 0;
                             video.forEach(content => {
                                 if (content.key == "title") {
                                     utitle.innerText = content.val();
@@ -58,12 +53,10 @@ VSP
                                 if (content.key == "fileURL") {
                                     url = content.val();
                                     if (url.includes("-")) {
-                                        // vid.autofocus = 'true';
                                         vidLink = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + url + ".mp4?alt=media";
                                         vid.setAttribute("src", vidLink);
                                     }
                                     else {
-                                        // tube.autofocus = 'true';
                                         tube.style.display = "block";
                                         vid.style.display = "none";
                                         tubeLink = "https://www.youtube.com/embed/" + url + "?autoplay=1&rel=0";
@@ -73,9 +66,6 @@ VSP
                             });
                         }
                     });
-                    if (flag) {
-                        alert("Video Not Available.");
-                    }
                 }
             });
         });
@@ -84,7 +74,6 @@ VSP
 {% endblock script %}
 
 {% block body %}
-<!-- <h1>Watch a video</h1> -->
 <div id="key" style="display: none;">{{key}}</div>
 <div class="container play-container">
     <div class="row">
@@ -100,10 +89,12 @@ VSP
     </div>
     <div class="button">
         <button class="Overview"><a href="">Overview</a></button>
-        <button class="s2"><a href="">Q&A</a></button>
+        <!-- <button class="s2"><a href="">Q&A</a></button> -->
         <button class="Share"><a href=""></a><a href="">Share</a></button>
         <hr>
     </div>
-    <div class="desc" id="udesc"></div>
+    <div class="description">
+        <div class="desc" id="udesc"></div>
+    </div>
 </div>
 {% endblock body %}

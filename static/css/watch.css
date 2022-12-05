@@ -5,8 +5,18 @@
 
 }
 
+.description {
+    border-radius: 5px;
+    background-color: black;
+    max-width: 859px;
+    min-height: 150px;
+    padding: 10px;
+}
+
 .play-container {
     padding-left: 2%;
+    margin-bottom: 10vh;
+    transition: 600ms;
 }
 
 .row {
@@ -23,6 +33,7 @@
 
 .play-video {
     flex-basis: 69%;
+    transition: 600ms;
     /* height: 300px; */
 }
 

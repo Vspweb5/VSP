@@ -33,7 +33,6 @@ VSP | Videos
     const loader = document.getElementById("loader");
     var url = null;
     var title = null;
-    var desc = null;
     var uKey = null;
 
     function createVideo() {
@@ -45,13 +44,11 @@ VSP | Videos
         const content = document.createElement("div");
         const mytitle = document.createElement("div");
         const h3 = document.createElement("h3");
-        const mydesc = document.createElement("div");
         const thumbnail = document.createElement("div");
         var image;
         mybox.className = 'my-box';
         content.className = 'content';
         mytitle.className = 'title';
-        mydesc.className = 'desc';
         thumbnail.className = 'thumbnail';
 
         txtkey.setAttribute('value', uKey.replace('-', ''));
@@ -67,7 +64,6 @@ VSP | Videos
         }
 
         h3.innerText = title;
-        mydesc.innerText = desc;
         myform.setAttribute('action', '/watch');
         myform.setAttribute('method', 'get');
         txtkey.setAttribute('type', 'hidden');
@@ -80,7 +76,6 @@ VSP | Videos
 
         mytitle.appendChild(h3);
         content.appendChild(mytitle);
-        content.appendChild(mydesc);
         content.appendChild(submit);
         thumbnail.appendChild(image);
         mybox.appendChild(thumbnail);
@@ -90,46 +85,44 @@ VSP | Videos
         // console.log("Video created!");
     }
 
-    onValue(dbRef, (snapshot) => {
-        snapshot.forEach(snap => {
-            snap.forEach(snap1 => {
-                if (snap1.key == "videos") {
-                    snap1.forEach(snap2 => {
-                        // console.log(snap2.val());
-                        uKey = snap2.key;
-                        snap2.forEach(fileURL => {
-                            loader.style.display = 'none';
-                            box.classList.add("boxOverride");
-                            if (fileURL.key == "fileURL") {
-                                // console.log("URL: ", fileURL.val());
-                                url = fileURL.val();
-                            }
-                            if (fileURL.key == "title") {
-                                // console.log("Title: ", fileURL.val());
-                                title = fileURL.val();
-                            }
-                            if (fileURL.key == "desc") {
-                                // console.log("Description: ", fileURL.val());
-                                desc = fileURL.val();
-                            }
-                            if (url != null && title != null && desc != null) {
-                                createVideo();
-                                url = title = desc = null;
-                                // console.log(url, title, desc);
-                            }
+    function search() {
+        onValue(dbRef, (snapshot) => {
+            snapshot.forEach(snap => {
+                snap.forEach(snap1 => {
+                    if (snap1.key == "videos") {
+                        snap1.forEach(snap2 => {
+                            // console.log(snap2.val());
+                            uKey = snap2.key;
+                            snap2.forEach(fileURL => {
+                                loader.style.display = 'none';
+                                box.classList.add("boxOverride");
+                                if (fileURL.key == "fileURL") {
+                                    // console.log("URL: ", fileURL.val());
+                                    url = fileURL.val();
+                                }
+                                if (fileURL.key == "title") {
+                                    // console.log("Title: ", fileURL.val());
+                                    title = fileURL.val();
+                                }
+                                if (url != null && title != null) {
+                                    createVideo();
+                                    url = title = null;
+                                }
+                            });
+                            uKey = null;
                         });
-                        uKey = null;
-                    });
-                }
+                    }
+                });
             });
         });
-    });
+    }
+
+    search();
 </script>
 {% endblock script %}
 
 {% block body %}
 <h1>Videos</h1>
-<!-- <a href="/">Home</a> -->
 
 <div class="box" id="box">
     <div class="loader" id="loader">
@@ -148,29 +141,6 @@ VSP | Videos
                 stroke-dasharray="44 1111" stroke-dashoffset="10" />
         </svg>
     </div>
-    <!-- <div class="my-box">
-        <img src="{{url_for('static', filename='files/image.webp')}}" alt="Image" />
-        <div class="content">
-            <span class="title">
-                Hello This is video.
-            </span><br />
-            <span class="desc">
-                This is description.
-            </span>
-        </div>
-    </div> -->
-    <!-- {% for i in range(1, 5) %}
-    <div class="my-box">
-        <img src="https://www.morebusiness.com/wp-content/uploads/2016/02/free-stock-photos.jpg" alt="Image" />
-        <span class="content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis architecto saepe, dolorem atque dolor
-            placeat quam fugiat, odit voluptatibus optio, consequatur omnis harum repellendus!
-        </span><br />
-        <span class="desc">
-            This is description.
-        </span>
-    </div>
-    {% endfor %} -->
 </div>
 
 {% endblock body %}

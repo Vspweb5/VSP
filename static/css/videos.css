@@ -5,6 +5,7 @@
     align-items: center;
     height: 80vh;
     flex-wrap: wrap;
+    transition: 3s;
 }
 
 .boxOverride {
@@ -20,6 +21,7 @@
     /* border: solid; */
     box-shadow: 0px 0px 2px 0px white;
     border-radius: 5px;
+    transition: 600ms;
 }
 
 .thumbnail {
@@ -53,14 +55,17 @@ video {
 }
 
 .title h3 {
+    height: 36px;
+    max-height: 36px;
+    overflow: hidden;
     color: rgb(200, 255, 255);
     line-height: 18px;
     font-size: 14px;
     margin-bottom: 6px;
 }
 
-.desc {
+/* .desc {
     font-size: 14px;
     margin: 2px 0;
     color: #979797;
-}
+} */
