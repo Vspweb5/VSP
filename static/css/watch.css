@@ -15,6 +15,12 @@
     flex-wrap: wrap;
 }
 
+@media screen and (max-width: 768px) {
+    .row {
+        display: revert !important;
+    }
+}
+
 .play-video {
     flex-basis: 69%;
     /* height: 300px; */
@@ -29,8 +35,9 @@
 }
 
 .play-video iframe {
+    aspect-ratio: 16 / 9;
     width: 100%;
-    height: 484px;
+    /* height: 484px; */
 }
 
 .play-video h3 {
