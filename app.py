@@ -3,9 +3,12 @@ import flask_session
 from datetime import timedelta
 from config import Config
 from pyrebase import pyrebase
+from flask_minify import minify
 
 ########## Flask Init #################
 app = Flask(__name__)
+
+minify(app=app, html=True, js=True, cssless=True)
 
 app.config.from_object(Config)
 app.config["SESSION_PERMANENT"] = False
