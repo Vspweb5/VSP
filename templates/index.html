@@ -3,8 +3,168 @@
 VSP
 {% endblock title %}
 
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/videos.css') }}" />
+{% endblock link %}
+
+{% block script %}
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCV5Ve41CZI5b2j9dexFqQjwH9pdvur5KY",
+        authDomain: "vsp-web.firebaseapp.com",
+        databaseURL: "https://vsp-web-default-rtdb.firebaseio.com",
+        projectId: "vsp-web",
+        storageBucket: "vsp-web.appspot.com",
+        messagingSenderId: "76950228191",
+        appId: "1:76950228191:web:c83ad1d27d8c333961ed6a",
+        measurementId: "G-FH6MYLQEC4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+    const dbRef = ref(db, 'search/');
+    const loader = document.getElementById("loader");
+    var url = null;
+    var title = null;
+    var uKey = null;
+    var count = 1;
+
+    function createVideo() {
+        const box = document.getElementById("box");
+        const myform = document.createElement("form");
+        const txtkey = document.createElement("input");
+        const submit = document.createElement("button");
+        const mybox = document.createElement("div");
+        const content = document.createElement("div");
+        const mytitle = document.createElement("div");
+        const h3 = document.createElement("h3");
+        const thumbnail = document.createElement("div");
+        var image;
+        mybox.className = 'my-box';
+        content.className = 'content';
+        mytitle.className = 'title';
+        thumbnail.className = 'thumbnail';
+
+        txtkey.setAttribute('value', uKey.replace('-', ''));
+        // console.log(txtkey.value);
+        if (url.includes("-")) {
+            image = document.createElement("video");
+            url = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + url + ".mp4?alt=media#t=1";
+            image.setAttribute("src", url);
+        }
+        else {
+            image = document.createElement("img");
+            url = "//img.youtube.com/vi/" + url + "/0.jpg";
+            image.setAttribute("src", url);
+        }
+
+        h3.innerText = title;
+        myform.setAttribute('action', '/watch');
+        myform.setAttribute('method', 'get');
+        txtkey.setAttribute('type', 'hidden');
+        txtkey.setAttribute('name', 'v');
+        submit.setAttribute('type', 'submit');
+        submit.innerText = "Explore";
+        submit.classList.add("btn");
+        submit.classList.add("btn-success");
+        myform.appendChild(txtkey);
+
+        mytitle.appendChild(h3);
+        content.appendChild(mytitle);
+        content.appendChild(submit);
+        thumbnail.appendChild(image);
+        mybox.appendChild(thumbnail);
+        mybox.appendChild(content);
+        myform.appendChild(mybox);
+        box.appendChild(myform);
+        // console.log("Video created!");
+    }
+
+    function search() {
+        // console.log(count);
+        onValue(dbRef, (snapshot) => {
+            snapshot.forEach(snap1 => {
+                // console.log(snap1.val());
+                if (count <= 4) {
+                    uKey = snap1.key;
+                    snap1.forEach(fileURL => {
+                        loader.style.display = 'none';
+                        // box.classList.add("boxOverride");
+                        if (fileURL.key == "fileURL") {
+                            // console.log("URL: ", fileURL.val());
+                            url = fileURL.val();
+                        }
+                        if (fileURL.key == "title") {
+                            // console.log("Title: ", fileURL.val());
+                            title = fileURL.val();
+                        }
+                        if (url != null && title != null) {
+                            createVideo();
+                            url = title = null;
+                            count = count + 1;
+                        }
+                    });
+                    uKey = null;
+                }
+            });
+        });
+    }
+    search();
+</script>
+{% endblock script %}
+
+{% block banner %}
+<!-- <h1>This is the Index page</h1> -->
+<!-- Banner -->
+<div class="container-fluid m-0 p-0">
+    <div class="jumbotron primary-background text-white">
+        <div class="container">
+            <h3 class="display-3">Welcome To LearnRC. </h3>
+            <h3>Learn RC .</h3>
+            <p>Learning Online refers to any type of educational activity that takes place over the internet. It can
+                include
+                a variety of activities such as taking classes, completing assignments, or participating in
+                discussions or
+                forums. Learning online can provide students with access to quality education from anywhere in the
+                world, at
+                any time. It can also enable students to interact with peers and instructors from different parts of
+                the world
+                and to gain valuable knowledge and skills. Learning online also allows students to customize their
+                learning
+                experience to fit their individual needs and interests.</p>
+            <a href="/videos" class="btn btn-outline-light btn-lg"> <span class="fa 	fa fa-user-plus"></span> Start !
+                its
+                Free</a>
+            <a href="/login" class="btn btn-outline-light btn-lg" id="islogged"> <span
+                    class="fa fa-user-circle fa-spin"></span>
+                Login</a>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+
 {% block body %}
-<h1>This is the Index page</h1>
-<h2>Header 2</h2>
-<!-- <a href="/vid">Video</a> -->
+<div class="box mb-2" style="height: 0 !important" id="box">
+    <div class="loader" id="loader">
+        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                    <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+            </defs>
+            <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16"
+                stroke-linecap="round" />
+            <path class="pl__worm"
+                d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z"
+                fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"
+                stroke-dasharray="44 1111" stroke-dashoffset="10" />
+        </svg>
+    </div>
+</div>
 {% endblock body %}

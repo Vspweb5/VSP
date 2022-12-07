@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}
-VSP | Videos
+VSP
 {% endblock title %}
 
 {% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/videos.css') }}" />
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loader.css') }}" /> -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loader.css') }}" />
 {% endblock link %}
 
 {% block script %}
-<!-- <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-<script src="{{url_for('static', filename='js/videos.js')}}"></script> -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
@@ -29,9 +28,9 @@ VSP | Videos
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase();
-    // const dbRef = ref(db, 'users/'); // OLD ALGO
     const dbRef = ref(db, 'search/');
     const loader = document.getElementById("loader");
+    var searchBar = document.getElementById("inSearch");
     var url = null;
     var title = null;
     var uKey = null;
@@ -86,71 +85,52 @@ VSP | Videos
         // console.log("Video created!");
     }
 
+    function matchSearch(str, sub) {
+        sub = sub.toLowerCase();
+        return str.toLowerCase()
+            .startsWith(sub.slice(0, Math.max(str.length - 1, 1)));
+    }
+
     function search() {
-        // console.log(count);
         onValue(dbRef, (snapshot) => {
-            snapshot.forEach(snap1 => {
-                // console.log(snap1.val());
-                uKey = snap1.key;
-                snap1.forEach(fileURL => {
+            snapshot.forEach(snap => {
+                // console.log(snap.key);
+                uKey = snap.key;
+                snap.forEach(data => {
+                    // console.log(data.key);
                     loader.style.display = 'none';
-                    box.classList.add("boxOverride");
-                    if (fileURL.key == "fileURL") {
+                    box.classList.add('boxOverride');
+                    if (data.key == "fileURL") {
                         // console.log("URL: ", fileURL.val());
-                        url = fileURL.val();
+                        url = data.val();
                     }
-                    if (fileURL.key == "title") {
+                    if (data.key == "title") {
                         // console.log("Title: ", fileURL.val());
-                        title = fileURL.val();
-                    }
-                    if (url != null && title != null) {
-                        createVideo();
-                        url = title = null;
+                        title = data.val();
+                        if (matchSearch(title, searchBar.innerText)) {
+                            if (url != null && title != null) {
+                                createVideo();
+                                url = title = null;
+                            }
+                        }
                     }
                 });
                 uKey = null;
             });
         });
     }
+
     search();
 </script>
-<!-- OLD ALGO -->
-<!-- function search() {
-    onValue(dbRef, (snapshot) => {
-        snapshot.forEach(snap => {
-            snap.forEach(snap1 => {
-                if (snap1.key == "videos") {
-                    snap1.forEach(snap2 => {
-                        // console.log(snap2.val());
-                        uKey = snap2.key;
-                        snap2.forEach(fileURL => {
-                            loader.style.display = 'none';
-                            box.classList.add("boxOverride");
-                            if (fileURL.key == "fileURL") {
-                                // console.log("URL: ", fileURL.val());
-                                url = fileURL.val();
-                            }
-                            if (fileURL.key == "title") {
-                                // console.log("Title: ", fileURL.val());
-                                title = fileURL.val();
-                            }
-                            if (url != null && title != null) {
-                                createVideo();
-                                url = title = null;
-                            }
-                        });
-                        uKey = null;
-                    });
-                }
-            });
-        });
-    });
-} -->
 {% endblock script %}
 
 {% block body %}
 <h1>Videos</h1>
-
+<div class="search">
+    <h1>
+        Search: <h2 id="inSearch"> {{query}}</h2>
+    </h1>
+</div>
 <div class="box" id="box">
     <div class="loader" id="loader">
         <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">

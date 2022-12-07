@@ -11,7 +11,7 @@
 .boxOverride {
     height: 100% !important;
     justify-content: unset !important;
-    align-items: unset !important;
+    /* align-items: unset !important; */
 }
 
 .my-box {
@@ -22,6 +22,8 @@
     box-shadow: 0px 0px 2px 0px white;
     border-radius: 5px;
     transition: 600ms;
+    /* background-color: rgba(33, 37, 41, 1) !important; */
+    background-color: blue !important;
 }
 
 .thumbnail {

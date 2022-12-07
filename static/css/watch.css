@@ -7,7 +7,8 @@
 
 .description {
     border-radius: 5px;
-    background-color: black;
+    /* background-color: grey; */
+    color: rgba(33, 37, 41, 1) !important;
     max-width: 859px;
     min-height: 150px;
     padding: 10px;

@@ -40,7 +40,7 @@
 }
 
 .pl__ring {
-    stroke: hsla(var(--hue), 10%, 10%, 0.1);
+    stroke: hsla(var(--hue), 10%, 10%, 100.0) !important;
     transition: stroke 0.3s;
 }
 
@@ -57,7 +57,7 @@
     }
 
     .pl__ring {
-        stroke: hsla(var(--hue), 10%, 90%, 0.1);
+        stroke: hsla(var(--hue), 10%, 90%, 100.0) !important;
     }
 }
 

@@ -8,7 +8,7 @@ from flask_minify import minify
 ########## Flask Init #################
 app = Flask(__name__)
 
-minify(app=app, html=True, js=True, cssless=True)
+# minify(app=app, html=True, js=True, cssless=True)
 
 app.config.from_object(Config)
 app.config["SESSION_PERMANENT"] = False
@@ -78,7 +78,10 @@ def vid():
     check()
     if request.method == "GET":
         key = request.args.get('v')
-        return render_template('watch.html', username=session["username"], key=key)
+        # if '+' in key:
+        #     key = key.split('+')[1]
+        # print(key)
+        return render_template('watch.html', username=session["username"], my_key=key)
     redirect('/videos')
 
 
@@ -86,6 +89,15 @@ def vid():
 def videos():
     check()
     return render_template('videos.html', username=session["username"])
+
+
+@app.route('/search', methods=["GET", "POST"])
+def search():
+    if request.method == "GET":
+        query = request.args.get('searchBox')
+        return render_template('search.html', query=query)
+    else:
+        return render_template('search.html', query="Not Found")
 
 
 @app.route('/logout')
@@ -98,7 +110,7 @@ def logout():
 def login():
     if request.method == "POST":
         email = request.form.get("email")
-        key = email.split('@')[0]
+        key = (email.split('@')[0]).split('.')[0]
         password = request.form.get("password")
         try:
             auth.sign_in_with_email_and_password(email, password)
@@ -124,7 +136,7 @@ def login():
 def signup():
     if request.method == "POST":
         email = request.form.get("email")
-        username = email.split('@')[0]
+        username = (email.split('@')[0]).split('.')[0]
         password = request.form.get("password")
         data = {
             'name': username,
@@ -132,8 +144,13 @@ def signup():
             'password': password
         }
         try:
-            auth.create_user_with_email_and_password(email, password)
-            db.child('users').child(email.split('@')[0]).set(data)
+            user = auth.create_user_with_email_and_password(email, password)
+            # auth.create_user_with_email_and_password(email, password)
+            # print("Id: " + user['idToken'])
+            # user = auth.refresh(user['refreshToken'])
+            auth.send_email_verification(user['idToken'])
+            key = (email.split('@')[0]).split('.')[0]
+            db.child('users').child(key).set(data)
             return render_template('login.html', email=email, password=password)
         except Exception as e:
             print("\n")
@@ -152,4 +169,4 @@ def signup():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

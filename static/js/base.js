@@ -9,6 +9,7 @@ var login3 = document.getElementById("in3");
 
 if (username.innerText == "null" || username.innerText == null || username.innerText == "") {
     logout1.classList.remove("logged");
+    // logout1.style.display = 'block';
     logout2.classList.remove("logged");
     login1.classList.add("logged");
     login2.classList.add("logged");
@@ -16,6 +17,7 @@ if (username.innerText == "null" || username.innerText == null || username.inner
 }
 else {
     logout1.classList.add("logged");
+    // logout1.style.display = 'none';
     logout2.classList.add("logged");
     login1.classList.remove("logged");
     login2.classList.remove("logged");

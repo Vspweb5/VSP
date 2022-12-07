@@ -32,6 +32,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // const dbRef = firebase.database().ref();
 const dbRef = firebase.database().ref('users/' + username.innerText + '/videos');
+var seRef;
 // const usersRef = dbRef.child('users').child(username.innerText).child('videos');
 
 var match;
@@ -109,6 +110,14 @@ function uploadVideo() {
             title: fileTitle,
             desc: forDesc.value
         });
+        // console.log(newRef.key);
+        var key = newRef.key;
+        seRef = firebase.database().ref('search/' + key);
+        seRef.set({
+            fileURL: url,
+            title: fileTitle,
+            desc: forDesc.value
+        });
         alert("Video Uploaded Successfully!");
         document.location.href = "/upload";
     }
@@ -122,7 +131,7 @@ function uploadVideo() {
         uploadTask.on("state_changed", (snapshot) => {
             console.log(snapshot);
             percentVal = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            console.log(percentVal);
+            // console.log(percentVal);
             uploadPercentage.innerHTML = percentVal + "%";
             progress.style.width = percentVal + "%";
         }, (error) => {

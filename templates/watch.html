@@ -26,8 +26,15 @@ VSP
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase();
-    const dbRef = ref(db, '/users/');
-    const uKey = '-' + document.getElementById("key").innerText;
+    const dbRef = ref(db, '/search/');
+    var uKey = document.getElementById("key").innerText;
+    if (uKey.includes(' ')) {
+        uKey = uKey.replace(' ', '-');
+    }
+    else {
+        uKey = '-' + uKey;
+    }
+    // console.log(uKey.replace(' ', '-'));
     const vid = document.getElementById("uVideo");
     const tube = document.getElementById("uTube");
     var utitle = document.getElementById("utitle");
@@ -37,45 +44,45 @@ VSP
     var tubeLink;
 
     onValue(dbRef, (snapshot) => {
-        snapshot.forEach(user => {
-            user.forEach(snap => {
-                if (snap.key == "videos") {
-                    snap.forEach(video => {
-                        if (video.key == uKey) {
-                            video.forEach(content => {
-                                if (content.key == "title") {
-                                    utitle.innerText = content.val();
-                                    document.title = "VSP | " + content.val();
-                                }
-                                if (content.key == "desc") {
-                                    udesc.innerText = content.val();
-                                }
-                                if (content.key == "fileURL") {
-                                    url = content.val();
-                                    if (url.includes("-")) {
-                                        vidLink = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + url + ".mp4?alt=media";
-                                        vid.setAttribute("src", vidLink);
-                                    }
-                                    else {
-                                        tube.style.display = "block";
-                                        vid.style.display = "none";
-                                        tubeLink = "https://www.youtube.com/embed/" + url + "?autoplay=1&rel=0";
-                                        tube.setAttribute("src", tubeLink);
-                                    }
-                                }
-                            });
+        snapshot.forEach(video => {
+            // console.log(video.key + " = " + uKey);
+            // console.log(video.key.trim() == uKey.trim());
+            if (video.key.trim() == uKey.trim()) {
+                video.forEach(content => {
+                    // console.log(content.val());
+                    if (content.key == "title") {
+                        utitle.innerText = content.val();
+                        document.title = "VSP | " + content.val();
+                    }
+                    if (content.key == "desc") {
+                        udesc.innerText = content.val();
+                    }
+                    if (content.key == "fileURL") {
+                        url = content.val();
+                        if (url.includes("+")) {
+                            url = url.replace("+", "");
                         }
-                    });
-                }
-            });
+                        if (url.includes("-")) {
+                            vidLink = "https://firebasestorage.googleapis.com/v0/b/vsp-web.appspot.com/o/videos%2F" + url + ".mp4?alt=media";
+                            vid.setAttribute("src", vidLink);
+                        }
+                        else {
+                            tube.style.display = "block";
+                            vid.style.display = "none";
+                            tubeLink = "https://www.youtube.com/embed/" + url + "?autoplay=1&rel=0";
+                            tube.setAttribute("src", tubeLink);
+                        }
+                    }
+                });
+            }
         });
     });
 </script>
 {% endblock script %}
 
 {% block body %}
-<div id="key" style="display: none;">{{key}}</div>
-<div class="container play-container">
+<div id="key" style="display: none;">{{my_key}}</div>
+<div class="container play-container mt-3">
     <div class="row">
         <div class="play-video">
             <video controls autoplay style="display: block" id="uVideo" src="" type="video/mp4">
@@ -84,9 +91,9 @@ VSP
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
-            <h3 class="title" id="utitle"></h3>
         </div>
     </div>
+    <h3 class="title" id="utitle"></h3>
     <div class="button">
         <button class="Overview"><a href="">Overview</a></button>
         <!-- <button class="s2"><a href="">Q&A</a></button> -->
