@@ -85,9 +85,17 @@ VSP
         // console.log("Video created!");
     }
 
+    function deleteSearch() {
+        // const myNode = document.getElementById("foo");
+        while (box.firstChild) {
+            box.removeChild(box.lastChild);
+        }
+    }
+
     function search() {
         // console.log(count);
         onValue(dbRef, (snapshot) => {
+            deleteSearch();
             snapshot.forEach(snap1 => {
                 // console.log(snap1.val());
                 if (count <= 4) {

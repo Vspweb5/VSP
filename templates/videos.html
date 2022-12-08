@@ -86,33 +86,41 @@ VSP | Videos
         // console.log("Video created!");
     }
 
-    function search() {
-        // console.log(count);
-        onValue(dbRef, (snapshot) => {
-            snapshot.forEach(snap1 => {
-                // console.log(snap1.val());
-                uKey = snap1.key;
-                snap1.forEach(fileURL => {
-                    loader.style.display = 'none';
-                    box.classList.add("boxOverride");
-                    if (fileURL.key == "fileURL") {
-                        // console.log("URL: ", fileURL.val());
-                        url = fileURL.val();
-                    }
-                    if (fileURL.key == "title") {
-                        // console.log("Title: ", fileURL.val());
-                        title = fileURL.val();
-                    }
-                    if (url != null && title != null) {
-                        createVideo();
-                        url = title = null;
-                    }
-                });
-                uKey = null;
-            });
-        });
+    function deleteSearch() {
+        // const myNode = document.getElementById("foo");
+        while (box.firstChild) {
+            box.removeChild(box.lastChild);
+        }
     }
-    search();
+
+    // function search() {
+    // console.log(count);
+    onValue(dbRef, (snapshot) => {
+        deleteSearch();
+        snapshot.forEach(snap1 => {
+            // console.log(snap1.val());
+            uKey = snap1.key;
+            snap1.forEach(fileURL => {
+                loader.style.display = 'none';
+                box.classList.add("boxOverride");
+                if (fileURL.key == "fileURL") {
+                    // console.log("URL: ", fileURL.val());
+                    url = fileURL.val();
+                }
+                if (fileURL.key == "title") {
+                    // console.log("Title: ", fileURL.val());
+                    title = fileURL.val();
+                }
+                if (url != null && title != null) {
+                    createVideo();
+                    url = title = null;
+                }
+            });
+            uKey = null;
+        });
+    });
+    // }
+    // search();
 </script>
 <!-- OLD ALGO -->
 <!-- function search() {
