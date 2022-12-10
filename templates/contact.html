@@ -7,6 +7,13 @@ VSP | Contact Us
 <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vid.css') }}" /> -->
 {% endblock link %}
 
+{% block script %}
+<script>
+    const act = document.getElementById("contact");
+    act.classList.add("active");
+</script>
+{% endblock script %}
+
 {% block body %}
 
 <!-- <h1>Contact Us !</h1>

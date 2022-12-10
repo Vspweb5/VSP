@@ -24,6 +24,43 @@ nav {
     /* margin-bottom: 20px; */
 }
 
+/* a {
+    transition: 3s;
+} */
+
+/* a:hover {
+    text-decoration: underline !important;
+} */
+
+.m-link {
+    color: #fff;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    /* letter-spacing: 0.15em; */
+
+    display: inline-block !important;
+    /* padding: 15px 20px; */
+    position: relative !important;
+}
+
+.m-link:after {
+    background: none repeat scroll 0 0 transparent !important;
+    bottom: 0 !important;
+    content: "" !important;
+    display: block !important;
+    height: 2px !important;
+    left: 50% !important;
+    position: absolute !important;
+    background: #fff !important;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s !important;
+    width: 0 !important;
+}
+
+.m-link:hover:after {
+    width: 100% !important;
+    left: 0 !important;
+}
+
 .logged {
     display: none !important;
 }

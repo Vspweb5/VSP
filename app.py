@@ -95,9 +95,9 @@ def videos():
 def search():
     if request.method == "GET":
         query = request.args.get('searchBox')
-        return render_template('search.html', query=query)
+        return render_template('search.html', username=session["username"], query=query)
     else:
-        return render_template('search.html', query="Not Found")
+        return render_template('search.html', username=session["username"], query="Not Found")
 
 
 @app.route('/logout')
