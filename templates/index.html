@@ -85,6 +85,7 @@ VSP
         mybox.appendChild(thumbnail);
         mybox.appendChild(content);
         myform.appendChild(mybox);
+        box.style.height = 'max-content';
         box.appendChild(myform);
         // console.log("Video created!");
     }
@@ -131,29 +132,17 @@ VSP
 {% endblock script %}
 
 {% block banner %}
-<!-- <h1>This is the Index page</h1> -->
 <!-- Banner -->
 <div class="container-fluid m-0 p-0">
-    <div class="jumbotron primary-background text-white">
+    <div class="jumbotron  primary-background text-red banner-background">
         <div class="container">
-            <h3 class="display-3">Welcome To LearnRC. </h3>
-            <h3>Learn RC .</h3>
-            <p>Learning Online refers to any type of educational activity that takes place over the internet. It can
-                include
-                a variety of activities such as taking classes, completing assignments, or participating in
-                discussions or
-                forums. Learning online can provide students with access to quality education from anywhere in the
-                world, at
-                any time. It can also enable students to interact with peers and instructors from different parts of
-                the world
-                and to gain valuable knowledge and skills. Learning online also allows students to customize their
-                learning
-                experience to fit their individual needs and interests.</p>
-            <a href="/videos" class="btn btn-outline-light btn-lg"> <span class="fa 	fa fa-user-plus"></span> Start !
-                its
-                Free</a>
-            <a href="/login" class="btn btn-outline-light btn-lg" id="islogged"> <span
-                    class="fa fa-user-circle fa-spin"></span>
+            <h3 class="display-3 text-"><strong>Welcome To LearnRC.</strong></h3>
+            <h3 class="new">LearnRC. </h3>
+            <p class="sub">Learning Online refers to any type of educational activity that takes place over</p>
+            <a href="signup.html"><button class="btn btn-outline-light btn-lg"> <span
+                        class="fa 	fa fa-user-plus"></span> Start ! its
+                    Free</button></a>
+            <a href="Login.html" class="btn btn-outline-light btn-lg"> <span class="fa fa-user-circle fa-spin"></span>
                 Login</a>
         </div>
     </div>
