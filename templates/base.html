@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link href="css/mystyle.css" rel="stylesheet" type="text/css" /> -->
     <link href="https://fonts.cdnfonts.com/css/mulish" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='files/favicon.ico') }}">
     <style>
         .banner-background {
             clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 91%, 63% 100%, 22% 91%, 0 99%, 0 0);
@@ -26,7 +27,11 @@
 
 <body>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark primary-background p-3">
-        <a class="navbar-brand" href="/"><span class="fa fa-bell-o"></span>LearnRC. </a>
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='files/logo.webp') }}" height="auto" style="max-width: 97px;"
+                alt="LearnRC">
+            <!-- <span class="fa fa-bell-o"></span>LearnRC. -->
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -106,7 +111,7 @@
                         upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or
                         snippets as the code wants to be simple. We will help programmers build up concepts in different
                         programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android,
-                        SQL and Algorithm.\</p>
+                        SQL and Algorithm.</p>
                 </div>
 
                 <div class="col-xs-6 col-md-3">
@@ -133,7 +138,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-6 col-xs-12">
                     <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
-                        <a href="index.html">LearnRC.</a>.
+                        <a href="/">LearnRC.</a>.
                     </p>
                 </div>
 
