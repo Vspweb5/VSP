@@ -78,6 +78,35 @@ VSP
         });
     });
 </script>
+<script type="text/javascript">
+    // Share operations
+    const share = document.getElementById('share');
+    share.onclick = (() => {
+        var url = window.location.href;
+        const link = document.getElementById("link");
+
+        url = url.replace("+", "");
+        url = url.replace("#", "");
+        link.value = url;
+    });
+
+    function Copy() {
+        // Get the text field
+        var copyText = document.getElementById("link");
+        var copied = document.getElementById("copied");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+        copied.style.display = "unset";
+
+        // Alert the copied text
+        // alert("Copied the text: " + copyText.value);
+    }
+</script>
 {% endblock script %}
 
 {% block body %}
@@ -95,9 +124,40 @@ VSP
     </div>
     <h3 class="title" id="utitle"></h3>
     <div class="button">
-        <button class="Overview"><a href="">Overview</a></button>
+        <!-- <button class="Overview"><a href="">Overview</a></button> -->
         <!-- <button class="s2"><a href="">Q&A</a></button> -->
-        <button class="Share"><a href=""></a><a href="">Share</a></button>
+        <!-- <button class="Share"><a href=""></a><a href="">Share</a></button> -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+            data-placement="top" title="Share the link!" id="share">
+            Share
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Share the link</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" style="width: 100%" id="link">
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <div id="copied" style="color: brown; display: none;">Url Copied!</div>
+                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+                            title="Copy it!" onclick="Copy()">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <hr>
     </div>
     <div class="description">
