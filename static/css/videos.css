@@ -23,7 +23,7 @@
     border-radius: 5px;
     transition: 600ms;
     /* background-color: rgba(33, 37, 41, 1) !important; */
-    background-color: blue !important;
+    background-color: black !important;
 }
 
 .thumbnail {
@@ -62,8 +62,10 @@ video {
     overflow: hidden;
     color: rgb(200, 255, 255);
     line-height: 18px;
-    font-size: 14px;
+    font-size: medium;
     margin-bottom: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
 }
 
 /* .desc {

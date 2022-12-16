@@ -1,5 +1,6 @@
 /* @font-family: 'Mulish', sans-serif; */
-@import url('https://fonts.cdnfonts.com/css/mulish');
+/* @import url('https://fonts.cdnfonts.com/css/mulish'); */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;800&display=swap');
 
 :root {
     --hue: 223;
@@ -25,6 +26,11 @@ body {
     box-shadow: 0 2px 4px 0 rgba(255, 255, 255, .2);
     margin-bottom: 20px;
 } */
+
+#my-500 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+}
 
 .m-link {
     color: #fff;

@@ -103,7 +103,7 @@ VSP
             deleteSearch();
             snapshot.forEach(snap1 => {
                 // console.log(snap1.val());
-                if (count <= 4) {
+                if (count <= 3) {
                     uKey = snap1.key;
                     snap1.forEach(fileURL => {
                         loader.style.display = 'none';
@@ -136,13 +136,16 @@ VSP
 <div class="container-fluid m-0 p-0">
     <div class="jumbotron  primary-background text-red banner-background">
         <div class="container">
-            <h3 class="display-3 text-"><strong>Welcome To LearnRC.</strong></h3>
-            <h3 class="new">LearnRC. </h3>
-            <p class="sub">Learning Online refers to any type of educational activity that takes place over</p>
-            <a href="signup.html"><button class="btn btn-outline-light btn-lg"> <span
-                        class="fa 	fa fa-user-plus"></span> Start ! its
+            <h3 class="display-3 text-" id="my-500">
+                <strong>Welcome To LearnRC.</strong>
+            </h3>
+            <!-- <h3 class="new">LearnRC. </h3>-->
+            <br /><br />
+            <!-- <p class="sub">Learning Online refers to any type of educational activity that takes place over</p> -->
+            <a href="/signup"><button class="btn btn-outline-light btn-lg"> <span class="fa 	fa fa-user-plus"></span>
+                    Start ! its
                     Free</button></a>
-            <a href="Login.html" class="btn btn-outline-light btn-lg"> <span class="fa fa-user-circle fa-spin"></span>
+            <a href="/login" class="btn btn-outline-light btn-lg"> <span class="fa fa-user-circle fa-spin"></span>
                 Login</a>
         </div>
     </div>
